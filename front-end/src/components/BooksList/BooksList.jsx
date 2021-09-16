@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux";
+
+import { getBooks } from '../../actions/bookActions';
+
 import './BooksList.css'
 
 const BooksList = () => {
     const [isLoaded, setIsLoaded] = useState(false);
-    const [books, setBooks] = useState([])
+
+    const books = useSelector(state => state.bookReducer.books);
+    const isBooksSet = useSelector(state => state.bookReducer.isBooksSet);
+
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        fetch("http://localhost:8000/books/list/")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    setIsLoaded(true);
-                    setBooks(result)
-                },
-                (error) => {
-                    setIsLoaded(true);
-                }
-            )
-    }, [])
+        if (!isBooksSet) dispatch(getBooks(setIsLoaded))
+    }, [isBooksSet, dispatch])
 
     if (isLoaded) {
         return (
