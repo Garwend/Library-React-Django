@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    font-family: 'Lato', sans-serif;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    font-family: 'Lato', sans-serif;
+    outline: none;
+    cursor: pointer;
+}
+
+input,
+textarea {
+    font-family: 'Lato', sans-serif;
+}
+
+textarea {
+    resize: none;
+}
+
+a {
+    color: var(--font-color);
+    text-decoration: none;
+}
