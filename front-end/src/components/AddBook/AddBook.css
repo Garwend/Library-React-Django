@@ -1,0 +1,18 @@
+.add-book-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-book-form input {
+    padding: 5px;
+    border: 2px solid;
+    margin-top: 10px;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.add-book-form button {
+    margin-top: 10px;
+}

@@ -1,4 +1,4 @@
-import { SET_BOOKS } from "../actions/bookActions";
+import { ADD_BOOK,SET_BOOKS } from "../actions/bookActions";
 
 const defaultState = {
     isBooksSet: false,
@@ -7,6 +7,11 @@ const defaultState = {
 
 const bookReducer = (state = defaultState, action) => {
     switch (action.type) {
+        case ADD_BOOK:
+            return {
+                isBooksSet: state.isBooksSet,
+                books: [...state.books, action.payload]
+            }
         case SET_BOOKS:
             return {
                 isBooksSet: true,
