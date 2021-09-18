@@ -1,6 +1,7 @@
 .books {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     margin-top: 50px;
 }
 
@@ -9,6 +10,6 @@
     height: 350px;
     padding: 5px;
     border: 2px solid;
-    margin: 0 20px;
+    margin: 20px;
     border-radius: 10px;
 }
