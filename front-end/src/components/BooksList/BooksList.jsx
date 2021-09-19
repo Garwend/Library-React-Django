@@ -6,10 +6,10 @@ import { getBooks } from '../../actions/bookActions';
 import './BooksList.css'
 
 const BooksList = () => {
-    const [isLoaded, setIsLoaded] = useState(false);
-
     const books = useSelector(state => state.bookReducer.books);
     const isBooksSet = useSelector(state => state.bookReducer.isBooksSet);
+
+    const [isLoaded, setIsLoaded] = useState(isBooksSet);
 
     const dispatch = useDispatch();
 
