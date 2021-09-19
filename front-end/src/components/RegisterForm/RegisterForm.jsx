@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../../actions/userActions';
+
 import './RegisterForm.css'
 
 const RegisterForm = () => {
@@ -10,8 +13,11 @@ const RegisterForm = () => {
     const handlePasswordChange = e => setPassword(e.target.value);
     const handleEmailChange = e => setEmail(e.target.value);
 
+    const dispatch = useDispatch();
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(registerUser(username, email, password))
     }
 
     return (
