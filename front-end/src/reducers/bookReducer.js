@@ -1,4 +1,4 @@
-import { ADD_BOOK,SET_BOOKS } from "../actions/bookActions";
+import { ADD_BOOK,SET_BOOKS, DELETE_BOOK } from "../actions/bookActions";
 
 const defaultState = {
     isBooksSet: false,
@@ -11,6 +11,11 @@ const bookReducer = (state = defaultState, action) => {
             return {
                 isBooksSet: state.isBooksSet,
                 books: [...state.books, action.payload]
+            }
+        case DELETE_BOOK:
+            return {
+                isBooksSet:true,
+                books: state.books.filter(book => book.id !== action.payload),
             }
         case SET_BOOKS:
             return {

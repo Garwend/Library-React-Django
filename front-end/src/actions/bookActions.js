@@ -1,10 +1,19 @@
+import { refreshToken } from "./userActions";
+
 export const ADD_BOOK = 'ADD_BOOK';
+export const DELETE_BOOK = 'DELETE_BOOK';
 export const SET_BOOKS = 'SET_BOOKS';
 
 export const addBook = (payload) => ({
     type: ADD_BOOK,
     payload: payload,
 })
+
+export const deleteBook = (payload) => ({
+    type: DELETE_BOOK,
+    payload: payload,
+})
+
 
 export const setBooks = (payload) => ({
     type: SET_BOOKS,
@@ -49,4 +58,28 @@ export const getBooks = (setIsLoaded) => (dispatch) => {
             setIsLoaded(true)
         }
     )
+}
+
+export const deleteBookFetch = (id) => (dispatch) => {
+    fetch(`http://localhost:8000/books/detail/${id}/`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
+        },
+    })
+        .then(res => {
+            if (res.ok) return res
+            else throw new Error(res.statusText)
+        })
+        .then(
+            (result) => {
+                dispatch(deleteBook(id));
+            },
+            (error) => {
+                if (error.message === 'Unauthorized') {
+                    dispatch(refreshToken(deleteBookFetch, id));
+                }
+                else console.error(error)
+            }
+        )
 }
