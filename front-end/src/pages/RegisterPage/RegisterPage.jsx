@@ -10,7 +10,7 @@ const RegisterPage = () => {
         <section className='register-wrap'>
             <RegisterForm />
             <article style={{ textAlign: 'center' }}>
-                <Link to='login'>log in</Link>
+                <Link to='/login'>log in</Link>
             </article>
         </section>
     )
