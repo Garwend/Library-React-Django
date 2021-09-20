@@ -45,9 +45,9 @@ export const loginUser = (username, password) => (dispatch) => {
         .then(
             (result) => {
                 if ('access' in result && 'refresh' in result) {
-                    window.localStorage.setItem('token', result['access'])
-                    window.localStorage.setItem('refreshToken', result['refresh'])
-                    dispatch(setUser({"username": username}))
+                    window.localStorage.setItem('token', result['access']);
+                    window.localStorage.setItem('refreshToken', result['refresh']);
+                    dispatch(getUser());
                 }
                 else{
                     console.error('error')
