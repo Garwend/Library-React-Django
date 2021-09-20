@@ -11,7 +11,7 @@ const Header = () => {
         return (
             <header>
                 <nav>
-                    <p>{userData.username}</p>
+                    <Link to='/profile'>{userData.username}</Link>
                     <button className='logout-btn'>
                         logout
                     </button>
