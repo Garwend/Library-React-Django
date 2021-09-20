@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-
 import { getBooks } from '../../actions/bookActions';
+import Book from './Subcomponents/Book';
 
 import './BooksList.css'
 
@@ -21,15 +21,8 @@ const BooksList = () => {
         return (
             <section>
                 <ul className='books'>
-                    {books.map(book => (
-                        <li key={book.id} className='book'>
-                            <span>{book.author}</span>
-                            <h1>{book.title}</h1>
-                            <p>{book.description}</p>
-                        </li>
-                    ))}
+                    {books.map(book => <Book key={book.id} {...book} />)}
                 </ul>
-
             </section>
         )
     } else {

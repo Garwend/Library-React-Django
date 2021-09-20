@@ -1,0 +1,15 @@
+.book {
+    width: 250px;
+    height: 350px;
+    padding: 5px;
+    border: 2px solid;
+    margin: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.borrow-book-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}

@@ -84,7 +84,7 @@ export const getUser = () => (dispatch) => {
         )
 }
 
-export const refreshToken = (func) => (dispatch) => {
+export const refreshToken = (func, ...funcArgs) => (dispatch) => {
     const data = JSON.stringify({
         "refresh": window.localStorage.getItem('refreshToken'),
     })
@@ -103,7 +103,7 @@ export const refreshToken = (func) => (dispatch) => {
             (result) => {
                 window.localStorage.setItem('token', result['access']);
                 window.localStorage.setItem('refreshToken', result['refresh']);
-                dispatch(func());
+                dispatch(func(...funcArgs));
             },
             (error) => {
                 if (error.message === 'Unauthorized') {
@@ -115,4 +115,58 @@ export const refreshToken = (func) => (dispatch) => {
             }
         )
 
+}
+
+export const borrowBook = (id) => (dispatch) => {
+    const data = JSON.stringify({"id":id})
+    fetch('http://localhost:8000/users/borrow-book/', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: data,
+    })
+        .then(res => {
+            if (res.ok) return res.json()
+            else throw new Error(res.statusText)
+        })
+        .then(
+            (result) => {
+                dispatch(setUser(result))
+            },
+            (error) => {
+                if (error.message === 'Unauthorized') {
+                    dispatch(refreshToken(borrowBook, id));
+                }
+                else console.error(error)
+            }
+        )
+}
+
+export const returnBook = (id) => (dispatch) => {
+    const data = JSON.stringify({"id":id})
+    fetch('http://localhost:8000/users/borrow-book/', {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: data,
+    })
+        .then(res => {
+            if (res.ok) return res.json()
+            else throw new Error(res.statusText)
+        })
+        .then(
+            (result) => {
+                dispatch(setUser(result))
+            },
+            (error) => {
+                if (error.message === 'Unauthorized') {
+                    dispatch(refreshToken(borrowBook, id));
+                }
+                else console.error(error)
+            }
+        )
 }

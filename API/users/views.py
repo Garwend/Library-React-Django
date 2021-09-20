@@ -1,9 +1,11 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializer import UserSerializer
 from .models import User
+from books.models import Book
 # Create your views here.
 
 
@@ -24,5 +26,23 @@ def register_user(request):
 class UserDetails(APIView):
     def get(self, request):
         user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+class BorrowBook(APIView):
+    def post(self, request):
+        id = request.data['id']
+        user = request.user
+        book = get_object_or_404(Book, id=id)
+        user.borrowed_books.add(book)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+    def delete(self, request):
+        id = request.data['id']
+        user = request.user
+        book = get_object_or_404(Book, id=id)
+        user.borrowed_books.remove(book)
         serializer = UserSerializer(user)
         return Response(serializer.data)
