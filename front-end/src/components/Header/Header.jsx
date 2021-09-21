@@ -11,6 +11,7 @@ const Header = () => {
         return (
             <header>
                 <nav>
+                    <Link to='/'><span style={{ marginRight: '10px' }} className='material-icons'>home</span></Link>
                     <Link to='/profile'>{userData.username}</Link>
                     <button className='logout-btn'>
                         logout
