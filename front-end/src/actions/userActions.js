@@ -170,3 +170,30 @@ export const returnBook = (id) => (dispatch) => {
             }
         )
 }
+
+export const logoutUser = () => (dispatch) => {
+    const data = JSON.stringify({
+        "refreshToken": window.localStorage.getItem('refreshToken'),
+    })
+    fetch('http://localhost:8000/users/logout/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: data
+    })
+        .then(res => {
+            if (res.ok) return res
+            else throw new Error(res.statusText)
+        })
+        .then(
+            (result) => {
+                window.localStorage.removeItem('token');
+                window.localStorage.removeItem('refreshToken');
+                dispatch(setUser({}));
+            },
+            (error) => {
+                console.error(error)
+            }
+        )
+}
