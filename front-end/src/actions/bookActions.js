@@ -27,7 +27,7 @@ export const createBook = (author, title, description, clearInputs) => (dispatch
         "description": description,
         "author": author,
     })
-    fetch("http://localhost:8000/books/list/", {
+    fetch("http://localhost:8000/books/create/", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
