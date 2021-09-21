@@ -31,31 +31,55 @@ export const createBook = (author, title, description, clearInputs) => (dispatch
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
         },
         body: data
     })
-        .then(res => res.json())
+        .then(res => {
+            if (res.ok) return res.json()
+            else throw new Error(res.statusText)
+        })
         .then(
             (result) => {
                 dispatch(addBook(result))
                 clearInputs();
             },
             (error) => {
-                console.log(error)
+                if (error.message === 'Unauthorized') {
+                    dispatch(refreshToken(getBooks, author, title, description, clearInputs));
+                }
+                else {
+                    console.error(error)
+                }
             }
         )
 }
 
 export const getBooks = (setIsLoaded) => (dispatch) => {
-    fetch("http://localhost:8000/books/list/")
-    .then(res => res.json())
+    fetch("http://localhost:8000/books/list/", {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
+        },
+    })
+    .then(res => {
+        if (res.ok) return res.json()
+        else throw new Error(res.statusText)
+    })
     .then(
         (result) => {
             setIsLoaded(true)
             dispatch(setBooks(result))
         },
         (error) => {
-            setIsLoaded(true)
+            if (error.message === 'Unauthorized') {
+                dispatch(refreshToken(getBooks, setIsLoaded));
+            }
+            else {
+                console.error(error)
+                setIsLoaded(true)
+            }
+           
         }
     )
 }

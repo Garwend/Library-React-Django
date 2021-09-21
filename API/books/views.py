@@ -9,6 +9,8 @@ from.models import Book
 
 
 class BooksList(APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         books = Book.objects.all()
         serializer = BookSerializer(books, many=True)
@@ -23,6 +25,7 @@ class BooksList(APIView):
 
 
 class BookDetail(APIView):
+    permission_classes = [IsAdminUser]
 
     def delete(self, request, id):
         book = get_object_or_404(Book, id=id)
