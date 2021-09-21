@@ -84,6 +84,33 @@ export const getBooks = (setIsLoaded) => (dispatch) => {
     )
 }
 
+export const filterBooks = (title) => (dispatch) => {
+    fetch(`http://localhost:8000/books/list/?q=${title}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
+        },
+    })
+    .then(res => {
+        if (res.ok) return res.json()
+        else throw new Error(res.statusText)
+    })
+    .then(
+        (result) => {
+            dispatch(setBooks(result))
+        },
+        (error) => {
+            if (error.message === 'Unauthorized') {
+                dispatch(refreshToken(getBooks, title));
+            }
+            else {
+                console.error(error)
+            }
+           
+        }
+    )
+}
+
 export const deleteBookFetch = (id) => (dispatch) => {
     fetch(`http://localhost:8000/books/detail/${id}/`, {
         method: 'DELETE',

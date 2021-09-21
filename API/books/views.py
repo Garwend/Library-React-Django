@@ -13,6 +13,14 @@ class BooksList(ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
+    def get_queryset(self):
+        book_title = self.request.GET.get('q', '')
+        if len(book_title) == 0:
+            return Book.objects.all()
+        else:
+            print(book_title)
+            return Book.objects.filter(title__icontains=book_title)
+
 
 class CreateBook(APIView):
     permission_classes = [IsAdminUser]
