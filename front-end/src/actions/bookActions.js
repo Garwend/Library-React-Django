@@ -1,4 +1,4 @@
-import { refreshToken } from "./userActions";
+import { refreshToken, removeBook } from "./userActions";
 
 export const ADD_BOOK = 'ADD_BOOK';
 export const DELETE_BOOK = 'DELETE_BOOK';
@@ -98,6 +98,7 @@ export const deleteBookFetch = (id) => (dispatch) => {
         .then(
             (result) => {
                 dispatch(deleteBook(id));
+                dispatch(removeBook(id))
             },
             (error) => {
                 if (error.message === 'Unauthorized') {

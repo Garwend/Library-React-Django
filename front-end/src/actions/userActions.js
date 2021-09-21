@@ -1,8 +1,14 @@
 export const SET_USER = 'SET_USER';
+export const REMOVE_BOOK = 'REMOVE_BOOK';
 
 export const setUser = (payload) => ({
     type: SET_USER,
     payload: payload,
+})
+
+export const removeBook = (payload) => ({
+    type: REMOVE_BOOK,
+    payload: payload
 })
 
 export const registerUser = (username, email, password) => (dispatch) => {
